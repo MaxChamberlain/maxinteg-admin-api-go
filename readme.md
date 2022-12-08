@@ -1,5 +1,5 @@
 # Max Integrations Admin API
-maxinteg-admin-go is a Go project that provides a server API and basic CRUD operations for a shopping list application.
+maxinteg-admin-go is a Go project that provides a server API and basic CRUD operations for a project management application.
 
 ## Requirements
 
