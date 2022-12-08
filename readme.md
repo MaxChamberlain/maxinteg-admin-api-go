@@ -1,47 +1,4 @@
-make a readme.md file for this code in GO
-
-package main
-
-import (
-	api "maxinteg-admin-go/api/server"
-	"net/http"
-)
-
-func main() {
-	srv := api.NewServer()
-
-	http.ListenAndServe(":8080", srv)
-}
-
-
-package api
-
-import (
-	"maxinteg-admin-go/api/db"
-
-	"github.com/gorilla/mux"
-)
-
-type Server struct {
-	*mux.Router
-}
-
-func NewServer() *Server {
-	s := &Server{
-		Router: mux.NewRouter(),
-	}
-
-	s.Routes()
-	return s
-}
-
-func (s *Server) Routes() {
-	// s.HandleFunc("/items", s.createShoppingItem()).Methods(http.MethodPost)
-	s.HandleFunc("/user", db.LoginUser).Methods("POST")
-}
-
-# maxinteg-admin-go
-
+# Max Integrations Admin API
 maxinteg-admin-go is a Go project that provides a server API and basic CRUD operations for a shopping list application.
 
 ## Requirements
