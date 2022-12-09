@@ -4,7 +4,9 @@ go 1.19
 
 require (
 	firebase.google.com/go v3.13.0+incompatible
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/gorilla/mux v1.8.0
+	github.com/rs/cors v1.8.2
 	golang.org/x/crypto v0.4.0
 	google.golang.org/api v0.104.0
 )
