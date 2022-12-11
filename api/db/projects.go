@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/gorilla/mux"
 )
 
 type Project struct {
@@ -77,4 +79,27 @@ func GetProjects(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(projects)
+}
+
+func GetProject(w http.ResponseWriter, r *http.Request) {
+	ctx := context.Background()
+	vars := mux.Vars(r)
+	projectID := vars["project_id"]
+	client, err := GetFirebase().Firestore(ctx)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	doc, err := client.Collection("projects").Doc(projectID).Get(ctx)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	var project Project
+	doc.DataTo(&project)
+	project.ProjectID = doc.Ref.ID
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(project)
 }

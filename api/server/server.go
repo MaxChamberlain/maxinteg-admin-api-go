@@ -21,6 +21,7 @@ func NewServer() *Server {
 	}
 
 	s.Routes()
+
 	return s
 }
 
@@ -29,9 +30,10 @@ func (s *Server) Routes() {
 
 	s.HandleFunc("/user/login", db.LoginUser).Methods("POST")
 	s.HandleFunc("/user/logout", db.LogoutUser).Methods("POST")
-	s.HandleFunc("/user/by-token", db.GetUserByToken).Methods("POST")
-	s.HandleFunc("/project/create", db.CreateProject).Methods("POST")
-	s.HandleFunc("/project/list", db.GetProjects).Methods("GET")
+	s.HandleFunc("/user", db.GetUserByToken).Methods("GET")
+	s.HandleFunc("/project", db.CreateProject).Methods("PUT")
+	s.HandleFunc("/project", db.GetProjects).Methods("GET")
+	s.HandleFunc("/project/{project_id}", db.GetProject).Methods("GET")
 
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://127.0.0.1:4200", "http://localhost:4200"},
