@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strings"
 
 	firebase "firebase.google.com/go"
 	"google.golang.org/api/option"
@@ -23,7 +22,6 @@ func InitFirebase() {
 		log.Fatalln(err)
 	}
 	fmt.Println("Firebase Initialized")
-	fmt.Println("vars: " + strings.Join(os.Environ(), "\n"))
 }
 
 func GetFirebase() *firebase.App {

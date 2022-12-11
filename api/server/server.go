@@ -29,6 +29,13 @@ func NewServer() *Server {
 func (s *Server) Routes() {
 	s.Use(jwt.VerifyToken)
 
+	s.Use(func(h http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			r.Header.Set("Origin", "http://127.0.0.1:4200")
+			h.ServeHTTP(w, r)
+		})
+	})
+
 	s.HandleFunc("/user/login", db.LoginUser).Methods("POST")
 	s.HandleFunc("/user/logout", db.LogoutUser).Methods("POST")
 	s.HandleFunc("/user", db.GetUserByToken).Methods("GET")
