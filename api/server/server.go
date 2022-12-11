@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"log"
 	"maxinteg-admin-go/api/db"
 	jwt "maxinteg-admin-go/helpers/jwt"
@@ -46,5 +47,6 @@ func (s *Server) Routes() {
 	if port == "" {
 		port = "8080" // Default port if not specified
 	}
+	fmt.Println("Starting on port " + port)
 	log.Fatal(http.ListenAndServe(":"+port, handler))
 }
