@@ -42,5 +42,5 @@ func (s *Server) Routes() {
 	})
 
 	handler := c.Handler(s)
-	log.Fatal(http.ListenAndServe(os.Getenv("PORT"), handler))
+	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), handler))
 }
