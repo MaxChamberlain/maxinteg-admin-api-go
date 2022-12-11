@@ -22,6 +22,7 @@ func InitFirebase() {
 		log.Fatalln(err)
 	}
 	fmt.Println("Firebase Initialized")
+	fmt.Println("vars: " + os.Getenv("GOMAXPROCS"))
 }
 
 func GetFirebase() *firebase.App {
