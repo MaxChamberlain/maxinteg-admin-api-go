@@ -5,6 +5,7 @@ import (
 	"maxinteg-admin-go/api/db"
 	jwt "maxinteg-admin-go/helpers/jwt"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
@@ -41,5 +42,5 @@ func (s *Server) Routes() {
 	})
 
 	handler := c.Handler(s)
-	log.Fatal(http.ListenAndServe(":8080", handler))
+	log.Fatal(http.ListenAndServe(os.Getenv("PORT"), handler))
 }
