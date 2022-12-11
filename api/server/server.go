@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"log"
 	"maxinteg-admin-go/api/db"
 	jwt "maxinteg-admin-go/helpers/jwt"
@@ -22,6 +23,8 @@ func NewServer() *Server {
 	}
 
 	s.Routes()
+
+	fmt.Println("vars", os.Getenv("GOMAXPROCS"))
 
 	return s
 }
