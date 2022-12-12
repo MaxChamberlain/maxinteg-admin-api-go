@@ -31,9 +31,9 @@ func (s *Server) Routes() {
 	s.Use(jwt.VerifyToken)
 
 	s.HandleFunc("/user/login", db.LoginUser).Methods("POST")
-	s.HandleFunc("/user/logout", db.LogoutUser).Methods("POST")
+	s.HandleFunc("/user/logout", db.LogoutUser).Methods("GET")
 	s.HandleFunc("/user", db.GetUserByToken).Methods("GET")
-	s.HandleFunc("/project", db.CreateProject).Methods("PUT")
+	s.HandleFunc("/project", db.CreateProject).Methods("POST")
 	s.HandleFunc("/project", db.GetProjects).Methods("GET")
 	s.HandleFunc("/project/{project_id}", db.GetProject).Methods("GET")
 

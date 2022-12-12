@@ -3,9 +3,9 @@ package db
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -30,6 +30,7 @@ type Project struct {
 	Status                         string    `json:"status"`
 	OwnerID                        string    `json:"owner_id"`
 	ProjectID                      string    `json:"project_id"`
+	AllowedUsers                   []string  `json:"allowed_users"`
 }
 
 func CreateProject(w http.ResponseWriter, r *http.Request) {
@@ -40,7 +41,7 @@ func CreateProject(w http.ResponseWriter, r *http.Request) {
 	project.UpdatedAt = time.Now()
 	project.Status = "active"
 	project.OwnerID = r.Header.Get("User")
-	fmt.Println(r.Header)
+	project.AllowedUsers = []string{r.Header.Get("User")}
 
 	client, err := GetFirebase().Firestore(ctx)
 	if err != nil {
@@ -75,7 +76,9 @@ func GetProjects(w http.ResponseWriter, r *http.Request) {
 		var project Project
 		doc.DataTo(&project)
 		project.ProjectID = doc.Ref.ID
-		projects = append(projects, project)
+		if strings.Contains(strings.Join(project.AllowedUsers, ","), w.Header().Get("User")) && w.Header().Get("User") != "" {
+			projects = append(projects, project)
+		}
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -101,7 +104,13 @@ func GetProject(w http.ResponseWriter, r *http.Request) {
 	doc.DataTo(&project)
 	project.ProjectID = doc.Ref.ID
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(project)
+	if strings.Contains(strings.Join(project.AllowedUsers, ","), w.Header().Get("User")) && w.Header().Get("User") != "" {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(project)
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusUnauthorized)
+		json.NewEncoder(w).Encode("Unauthorized")
+	}
 }

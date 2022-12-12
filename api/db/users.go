@@ -60,7 +60,7 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Set-Cookie", "token="+token+"; Max-Age=3600; HttpOnly; SameSite=None; Secure; Path=/")
+	w.Header().Set("Set-Cookie", "token="+token+"; Max-Age=36000; HttpOnly; SameSite=None; Secure; Path=/")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(documentData)
 
@@ -68,7 +68,7 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func LogoutUser(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Set-Cookie", "token=; HttpOnly; SameSite=None; Max-Age=0; secure;")
+	w.Header().Set("Set-Cookie", "token=empty; Max-Age=1; HttpOnly; SameSite=None; Secure; Path=/")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode("Logged out")
 }
