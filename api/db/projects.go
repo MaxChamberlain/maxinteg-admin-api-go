@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -39,6 +40,7 @@ func CreateProject(w http.ResponseWriter, r *http.Request) {
 	project.UpdatedAt = time.Now()
 	project.Status = "active"
 	project.OwnerID = r.Header.Get("User")
+	fmt.Println(r.Header)
 
 	client, err := GetFirebase().Firestore(ctx)
 	if err != nil {
