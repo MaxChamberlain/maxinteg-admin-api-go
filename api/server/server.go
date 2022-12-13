@@ -38,7 +38,7 @@ func (s *Server) Routes() {
 	s.HandleFunc("/project/{project_id}", db.GetProject).Methods("GET")
 
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://127.0.0.1:4200", "http://localhost:4200", "https://main--splendorous-cannoli-458d65.netlify.app", "https://splendorous-cannoli-458d65.netlify.app"},
+		AllowedOrigins:   []string{"http://127.0.0.1:4200", "http://localhost:4200", "https://main--splendorous-cannoli-458d65.netlify.app", "https://splendorous-cannoli-458d65.netlify.app", "https://codeorg-website.netlify.app"},
 		AllowCredentials: true,
 	})
 
